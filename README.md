@@ -13,6 +13,7 @@ doas mv screenshot /usr/bin/
 ## Deps
 
 * [lqth][lqth]
+* [farbfeld][farbfeld]
 * [xrectsel][xrectsel]
 * [xdo][xdo] or [xdotool][xdotool]
 
@@ -20,3 +21,4 @@ doas mv screenshot /usr/bin/
 [xrectsel]: https://github.com/ropery/xrectsel
 [xdotool]: https://github.com/jordansissel/xdotool
 [xdo]: https://github.com/baskerville/xdo
+[farbfeld]: https://tools.suckless.org/farbfeld
