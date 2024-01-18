@@ -11,9 +11,10 @@ doas mv screenshot /usr/bin/
 ```
 
 ## Deps
+
 * [lqth][lqth]
 * [xrectsel][xrectsel]
-*[xdo][xdo] or [xdotool][xdotool]
+* [xdo][xdo] or [xdotool][xdotool]
 
 [lqth]: https://github.com/0x61nas/lqth
 [xrectsel]: https://github.com/ropery/xrectsel
