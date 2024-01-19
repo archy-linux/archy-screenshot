@@ -6,9 +6,10 @@ PIPETO=ff2png
 NOTIFY=
 OUTFILE="$HOME/Pictures/screenshot.png"
 SELTOOL=
+COPY=
 
 usage() {
-    echo "Usage: $0 [--region|--activewindow|--notify|--output <output_file>]" >&2
+    echo "Usage: $0 [--region|--activewindow|--notify|--output <output_file>|--copy]" >&2
     echo "The default output file: $OUTFILE" >&2
     exit 1
 }
@@ -35,7 +36,9 @@ while [ $# -gt 0 ]; do
         w | activewindow)
             ARGS="-w $(printf "%d" $(xdo id))" 2>/dev/null || ARGS="-w $(xdotool getactivewindow)";;
         n | notify)
-            NOTIFY=notify-send;;
+            NOTIFY="notify-send --urgency=low --expire-time=900 --app-name=$0";;
+        c | copy)
+            COPY="xclip -selection clipboard -t image/png -i";;
         *)
             usage;;
     esac
@@ -43,12 +46,15 @@ while [ $# -gt 0 ]; do
 done
 
 if [[ -n $SELTOOL ]]; then
+    [[ -n $NOTIFY ]] && $NOTIFY "Select an region to take a screenshot for" 
     ARGS="-r $($SELTOOL "x:%x,y:%y,w:%w,h:%h")"
 fi
 
-$CMD $ARGS | $PIPETO > $OUTFILE
-
-if [[ -n $NOTIFY ]]; then
-    $NOTIFY "Screenshot saved at: $OUTFILE"
+if [[ -n $COPY ]]; then
+    $CMD $ARGS | $PIPETO | $COPY
+    [[ -n $NOTIFY ]] && $NOTIFY "Screenshot copyed to system clipbooard"
+else
+    $CMD $ARGS | $PIPETO > $OUTFILE
+    [[ -n $NOTIFY ]] && $NOTIFY "Screenshot saved at: $OUTFILE"
 fi
 
